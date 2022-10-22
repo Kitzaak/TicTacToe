@@ -136,4 +136,43 @@ public class UnitTest1
         Assert.Equal(pieces, engine.Pieces());
         Assert.True(engine.IsOver());
     }
+
+    [Fact]
+    public void game_over_when_same_in_diagonal()
+    {
+        var engine = new Engine();
+
+        var pieces = new List<char>
+        {
+            'X', ' ', ' ',
+            'O', 'X', 'O',
+            ' ', ' ', 'X'
+        };
+        engine.Move(2, 2);
+        engine.Move(2, 1);        
+        engine.Move(1, 1);
+        engine.Move(2, 3);
+        engine.Move(3, 3);
+
+        Assert.Equal(pieces, engine.Pieces());
+        Assert.True(engine.IsOver());
+    }
+
+    [Theory]
+    [InlineData('X', ' ', ' ', 'X', 'O', 'O', ' ', ' ', 'X', 'O')]
+    [InlineData('X', ' ', ' ', 'X', 'O', 'O', 'O', ' ', 'X', 'X')]
+    public void can_load_pieces_into_engine(char field1, char field2, char field3, char field4, char field5, char field6, char field7, char field8, char field9, char NextMark)
+    {
+        var pieces = new List<char>
+        {
+            field1, field2, field3,
+            field4, field5, field6,
+            field7, field8, field9
+        };
+
+        var engine = new Engine(pieces);
+
+        Assert.Equal(pieces, engine.Pieces());
+        Assert.Equal(NextMark, engine.NextMark);
+    }
 }

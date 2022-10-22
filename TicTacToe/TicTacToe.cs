@@ -7,8 +7,13 @@ namespace TicTacToe
 {
     public class Engine
     {
-        private char _nextMark;
-        private List<char> _pieces;
+        char _nextMark;
+        List<char> _pieces;
+
+        public char NextMark
+        {
+            get => _nextMark;
+        }
 
         public Engine()
         {
@@ -20,6 +25,26 @@ namespace TicTacToe
                 ' ', ' ', ' '
             };
         }
+
+        public Engine(List<char> pieces)
+        {
+            _pieces = pieces;
+            int X = 0;
+            int O = 0;
+            foreach(char piece in _pieces)
+            {
+                if (piece == 'X')
+                    X++;
+                else if (piece == 'O')
+                    O++;
+            }
+
+            if (X == O)
+                _nextMark = 'X';
+            else
+                _nextMark = 'O';
+        }
+
         public List<char> Pieces()
         {
             return _pieces;
@@ -44,6 +69,8 @@ namespace TicTacToe
             if (IsRowComplete())
                 return true;
             if (IsColComplete())
+                return true;
+            if (IsDiagonalComplete())
                 return true;
             return false;
         }
@@ -84,6 +111,18 @@ namespace TicTacToe
             if (_pieces[1] != ' ' && _pieces[1] == _pieces[4] && _pieces[1] == _pieces[7])
                 complete = true;
             if (_pieces[2] != ' ' && _pieces[2] == _pieces[5] && _pieces[2] == _pieces[8])
+                complete = true;
+            
+            return complete;
+        }
+
+        private bool IsDiagonalComplete()
+        {
+            var complete = false;
+            
+            if (_pieces[0] != ' ' && _pieces[0] == _pieces[4] && _pieces[0] == _pieces[8])
+                complete = true;
+            if (_pieces[2] != ' ' && _pieces[2] == _pieces[4] && _pieces[2] == _pieces[6])
                 complete = true;
             
             return complete;
