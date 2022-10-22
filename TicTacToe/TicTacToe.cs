@@ -9,6 +9,7 @@ namespace TicTacToe
     {
         char _nextMark;
         List<char> _pieces;
+        string _whowon;
 
         public char NextMark
         {
@@ -45,6 +46,13 @@ namespace TicTacToe
                 _nextMark = 'O';
         }
 
+        public string WhoWon()
+        {
+            if (IsFullBoard())
+                return "Cat's game!";
+            return "No one yet!";
+        }
+
         public List<char> Pieces()
         {
             return _pieces;
@@ -52,6 +60,9 @@ namespace TicTacToe
 
         public void Move(int row, int col)
         {
+            if (IsOver())
+                throw new Exception("Game over. No more moves.");
+
             if (_pieces[MovePosition(row, col)] == ' ')
             {
                 _pieces[MovePosition(row, col)] = _nextMark;
