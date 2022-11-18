@@ -1,4 +1,5 @@
 using TicTacToe;
+using Xunit;
 
 namespace TicTacToeTest;
 
@@ -131,14 +132,14 @@ public class UnitTest1
     [Theory]
     [InlineData(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', "No one yet!")]
     [InlineData('X', 'X', 'O', 'O', 'X', 'X', 'X', 'O', 'O', "Cat's game!")]
-    // [InlineData('X', 'X', 'X', ' ', 'O', ' ', ' ', 'O', ' ', "X")]
-    // [InlineData('X', 'X', ' ', 'O', 'O', 'O', ' ', 'X', ' ', "O")]
-    // [InlineData(' ', ' ', 'O', ' ', 'O', ' ', 'X', 'X', 'X', "X")]
-    // [InlineData('X', ' ', ' ', 'X', 'O', 'O', 'X', ' ', ' ', "X")]
-    // [InlineData('X', 'O', 'O', ' ', 'O', ' ', 'X', 'O', ' ', "O")]
-    // [InlineData('O', 'O', 'X', ' ', ' ', 'X', ' ', ' ', 'X', "X")]
-    // [InlineData('X', 'O', ' ', ' ', 'X', ' ', ' ', 'O', 'X', "X")]
-    // [InlineData('X', 'X', 'O', ' ', 'O', ' ', 'O', 'X', ' ', "O")]
+    [InlineData('X', 'X', 'X', ' ', 'O', ' ', ' ', 'O', ' ', "X")]
+    [InlineData('X', 'X', ' ', 'O', 'O', 'O', ' ', 'X', ' ', "O")]
+    [InlineData(' ', ' ', 'O', ' ', 'O', ' ', 'X', 'X', 'X', "X")]
+    [InlineData('X', ' ', ' ', 'X', 'O', 'O', 'X', ' ', ' ', "X")]
+    [InlineData('X', 'O', 'O', ' ', 'O', ' ', 'X', 'O', ' ', "O")]
+    [InlineData('O', 'O', 'X', ' ', ' ', 'X', ' ', ' ', 'X', "X")]
+    [InlineData('X', 'O', ' ', ' ', 'X', ' ', ' ', 'O', 'X', "X")]
+    [InlineData('X', 'X', 'O', ' ', 'O', ' ', 'O', 'X', ' ', "O")]
     public void who_won(char field1, char field2, char field3, char field4, char field5, char field6, char field7, char field8, char field9, string who_won)
     {
         var pieces = new List<char>

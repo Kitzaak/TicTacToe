@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace TicTacToe
 {
     public class Engine
     {
         char _nextMark;
         List<char> _pieces;
-        string _whowon;
+        string _whowon = "No one yet!";
+        bool _gameOver = false;
 
         public char NextMark
         {
@@ -48,9 +44,9 @@ namespace TicTacToe
 
         public string WhoWon()
         {
-            if (IsFullBoard())
-                return "Cat's game!";
-            return "No one yet!";
+            IsOver();
+
+            return _whowon;
         }
 
         public List<char> Pieces()
@@ -75,68 +71,62 @@ namespace TicTacToe
 
         public bool IsOver()
         {
-            if (IsFullBoard())
-                return true;
-            if (IsRowComplete())
-                return true;
-            if (IsColComplete())
-                return true;
-            if (IsDiagonalComplete())
-                return true;
-            return false;
+            IsFullBoard();
+            IsRowComplete();
+            IsColComplete();
+            IsDiagonalComplete();
+
+            return _gameOver;
         }
 
-        private bool IsFullBoard()
+        private void IsFullBoard()
         {
-            var isFull = true;
-
+            bool isCatsGame = true;
             foreach (var pos in _pieces)
             {
                 if (pos == ' ')
-                    isFull = false;
+                    isCatsGame = false;
             }
 
-            return isFull;
+            if (isCatsGame)
+            {
+                _gameOver = true;
+                _whowon = "Cat's game!";
+            }
         }
 
-        private bool IsRowComplete()
+        private void IsRowComplete()
         {
-            var complete = false;
-            
             if (_pieces[0] != ' ' && _pieces[0] == _pieces[1] && _pieces[0] == _pieces[2])
-                complete = true;
+                SetEndAndWinner(_pieces[0]);
             if (_pieces[3] != ' ' && _pieces[3] == _pieces[4] && _pieces[3] == _pieces[5])
-                complete = true;
+                SetEndAndWinner(_pieces[3]);
             if (_pieces[6] != ' ' && _pieces[6] == _pieces[7] && _pieces[6] == _pieces[8])
-                complete = true;
-            
-            return complete;
+                SetEndAndWinner(_pieces[6]);
         }
 
-        private bool IsColComplete()
+        private void IsColComplete()
         {
-            var complete = false;
-            
             if (_pieces[0] != ' ' && _pieces[0] == _pieces[3] && _pieces[0] == _pieces[6])
-                complete = true;
+                SetEndAndWinner(_pieces[0]);
             if (_pieces[1] != ' ' && _pieces[1] == _pieces[4] && _pieces[1] == _pieces[7])
-                complete = true;
+                SetEndAndWinner(_pieces[1]);
             if (_pieces[2] != ' ' && _pieces[2] == _pieces[5] && _pieces[2] == _pieces[8])
-                complete = true;
-            
-            return complete;
+                SetEndAndWinner(_pieces[2]);
         }
 
-        private bool IsDiagonalComplete()
+        private void IsDiagonalComplete()
         {
-            var complete = false;
-            
             if (_pieces[0] != ' ' && _pieces[0] == _pieces[4] && _pieces[0] == _pieces[8])
-                complete = true;
+                SetEndAndWinner(_pieces[0]);
             if (_pieces[2] != ' ' && _pieces[2] == _pieces[4] && _pieces[2] == _pieces[6])
-                complete = true;
-            
-            return complete;
+                SetEndAndWinner(_pieces[2]);
+        }
+
+        private void SetEndAndWinner(char winner)
+        {
+            _gameOver = true;
+            _whowon = $"{winner}";
         }
 
         private int MovePosition(int row, int col)
